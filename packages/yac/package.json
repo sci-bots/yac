@@ -1,6 +1,6 @@
 {
   "name": "@yac/yac",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Multi-Language Package Management",
   "main": "index.js",
   "author": "Sci-Bots",
@@ -17,5 +17,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "bin": "bin/yac"
 }
