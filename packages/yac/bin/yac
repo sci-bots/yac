@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 const {spawnSync} = require('child_process');
 const hasbin = require('hasbin');
+
 const yacInit = require('@yac/init');
 const yacInstall = require('@yac/install');
+const yacExec = require('@yac/exec');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -24,5 +26,8 @@ const argv = require('yargs')
   })
   .command('install', 'install dependencies', () => {}, (argv) => {
     yacInstall(CWD(argv));
+  })
+  .command('exec <cmd>', 'execute command inside yac environment', () => {}, (argv) => {
+    yacExec(CWD(argv), argv.cmd);
   })
 .argv;
