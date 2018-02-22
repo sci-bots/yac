@@ -9,7 +9,8 @@
   "dependencies": {
     "hasbin": "^1.2.3",
     "yargs": "^11.0.0",
-    "@yac/init" : "^0.0.0"
+    "@yac/init" : "^0.0.0",
+    "@yac/install": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"

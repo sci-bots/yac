@@ -2,6 +2,12 @@
 const {spawnSync} = require('child_process');
 const hasbin = require('hasbin');
 const yacInit = require('@yac/init');
+const yacInstall = require('@yac/install');
+
+const CWD = (argv) => {
+  if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
+  return argv.cwd;
+}
 
 const argv = require('yargs')
   .option('cwd', {
@@ -14,10 +20,9 @@ const argv = require('yargs')
     }
   })
   .command('init', 'initialize a yac project', () => {}, (argv) => {
-    if (argv.cwd == undefined) {
-      argv.cwd = process.cwd();
-    }
-    console.log("CWD: ", argv.cwd);
-    yacInit(argv.cwd);
+    yacInit(CWD(argv));
+  })
+  .command('install', 'install dependencies', () => {}, (argv) => {
+    yacInstall(CWD(argv));
   })
 .argv;

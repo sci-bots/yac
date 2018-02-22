@@ -1,7 +1,7 @@
 {
-  "name": "@yac/init",
+  "name": "@yac/install",
   "version": "0.0.0",
-  "description": "Generator for initializing a Yac project",
+  "description": "Install yac project dependencies",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
@@ -10,7 +10,6 @@
     "access": "public"
   },
   "dependencies": {
-    "hasbin": "^1.2.3",
-    "inquirer": "^5.1.0"
+    "hasbin": "^1.2.3"
   }
 }
