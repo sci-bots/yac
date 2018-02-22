@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+const {spawnSync} = require('child_process');
+const hasbin = require('hasbin');
+const yacInit = require('@yac/init');
+
+const argv = require('yargs')
+  .option('cwd', {
+    describe: 'change directory of execution',
+    type: 'string'
+  })
+  .command('conda-info', 'show active conda', () => {}, (argv) => {
+    if (hasbin.sync('conda')) {
+      spawnSync('conda info', [], {stdio: 'inherit', shell: true});
+    }
+  })
+  .command('init', 'initialize a yac project', () => {}, (argv) => {
+    if (argv.cwd == undefined) {
+      argv.cwd = process.cwd();
+    }
+    console.log("CWD: ", argv.cwd);
+    yacInit(argv.cwd);
+  })
+.argv;

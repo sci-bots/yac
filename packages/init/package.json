@@ -1,0 +1,15 @@
+{
+  "name": "@yac/init",
+  "version": "0.0.0",
+  "description": "Generator for initializing a Yac project",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "hasbin": "^1.2.3"
+  }
+}

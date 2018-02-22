@@ -1,0 +1,9 @@
+{
+  "lerna": "2.9.0",
+  "packages": [
+    "packages/yac",
+    "packages/init"
+  ],
+  "version": "1.1.41",
+  "npmClient": "yarn"
+}

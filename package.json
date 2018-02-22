@@ -1,14 +1,12 @@
 {
-  "name": "@yac/yac",
-  "version": "1.0.0",
-  "description": "Multi-Language Package Management",
-  "main": "index.js",
+  "main": "lerna.json",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node packages/yac/bin/yac"
   },
   "keywords": [
     "Yac"
   ],
   "author": "Sci-Bots",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "repository": "https://github.com/sci-bots/yac.git"
 }
