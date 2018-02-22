@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const path = require('path');
 const {spawnSync} = require('child_process');
-const hasbin = require('hasbin');
 
 const yacInit = require('@yac/init');
 const yacInstall = require('@yac/install');
@@ -22,9 +21,7 @@ const argv = require('yargs')
     type: 'string'
   })
   .command('conda-info', 'show active conda', () => {}, (argv) => {
-    if (hasbin.sync('conda')) {
-      spawnSync('conda info', [], {stdio: 'inherit', shell: true});
-    }
+    spawnSync('conda info', [], {stdio: 'inherit', shell: true});
   })
   .command('init', 'initialize a yac project', () => {}, (argv) => {
     yacInit(CWD(argv));

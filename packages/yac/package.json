@@ -14,7 +14,6 @@
     "@yac/install": "^0.0.1",
     "@yac/remove": "^0.0.3",
     "@yac/undev": "^0.0.4",
-    "hasbin": "^1.2.3",
     "yargs": "^11.0.0"
   },
   "publishConfig": {

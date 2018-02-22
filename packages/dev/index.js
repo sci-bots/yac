@@ -24,7 +24,8 @@ module.exports = (cwd=undefined, packageLocation, packageName) => {
 
   // Link locally using conda dev
   console.log("Linking package location");
-  spawnSync(`${activate} conda develop ${packageLocation}`, [], options);
+  console.log(path.resolve(packageLocation));
+  spawnSync(`${activate} conda develop ${path.resolve(packageLocation)}`, [], options);
 
 }
 
