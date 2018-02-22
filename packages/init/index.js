@@ -40,7 +40,6 @@ module.exports = async (cwd=undefined) => {
 `name: ${packageJson.name}
 dependencies:
   - python==${answers[q1.name]}
-  - pip:
   `;
 
   // Write packageJSON to file

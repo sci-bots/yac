@@ -5,6 +5,7 @@ const hasbin = require('hasbin');
 const yacInit = require('@yac/init');
 const yacInstall = require('@yac/install');
 const yacExec = require('@yac/exec');
+const yacAdd = require('@yac/add');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -29,5 +30,9 @@ const argv = require('yargs')
   })
   .command('exec <cmd>', 'execute command inside yac environment', () => {}, (argv) => {
     yacExec(CWD(argv), argv.cmd);
+  })
+  .command('add <packageName> [type]', 'add package through conda or pip', () => {}, (argv) => {
+    if (argv.type == undefined) argv.type = 'conda';
+    yacAdd(CWD(argv), argv.type, argv.packageName);
   })
 .argv;

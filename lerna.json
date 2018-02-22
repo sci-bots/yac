@@ -4,7 +4,8 @@
     "packages/yac",
     "packages/init",
     "packages/install",
-    "packages/exec"
+    "packages/exec",
+    "packages/add"
   ],
   "version": "1.1.41",
   "npmClient": "yarn"

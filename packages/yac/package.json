@@ -11,7 +11,8 @@
     "yargs": "^11.0.0",
     "@yac/init" : "^0.0.0",
     "@yac/install": "^0.0.0",
-    "@yac/exec": "^0.0.0"
+    "@yac/exec": "^0.0.0",
+    "@yac/add": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"

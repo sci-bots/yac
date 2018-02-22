@@ -8,7 +8,7 @@ module.exports = (cwd=undefined, cmd) => {
   options.cwd = cwd;
 
   if (os.platform() == 'win32') {
-    cmd = `activate ./yac_environment ; ${cmd}`;
+    cmd = `activate .\\yac_environment ; ${cmd}`;
   } else {
     cmd = `source activate ./yac_environment && ${cmd}`;
   }
