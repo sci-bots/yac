@@ -49,6 +49,7 @@ Commands:
   yac add <packageName> [type]             add package through conda or pip
   yac remove <packageName> [type]          remove package through conda or pip
   yac dev <packageLocation> [packageName]  link local package
+  yac undev <packageLocation>              unlink local package
 
 Options:
   --help     Show help                                                 [boolean]
