@@ -1,5 +1,5 @@
-const os = require('os');
 const path = require('path');
+const os = require('os');
 const {spawnSync} = require('child_process');
 
 let options = {stdio: 'inherit', shell: true};
@@ -8,13 +8,11 @@ module.exports = (cwd=undefined, packageName, type) => {
   if (cwd == undefined) cwd = process.cwd();
   options.cwd = cwd;
 
-  console.log({type, packageName});
-
   let cmd;
   if (type == 'conda') {
-    cmd = `conda install ${packageName}`;
+    cmd = `conda uninstall ${packageName}`;
   } else if (type == 'pip') {
-    cmd = `pip install ${packageName}`
+    cmd = `pip uninstall ${packageName}`
   } else {
     throw `Invalid type ${type}. yac currently support conda and pip.`
   }
@@ -26,7 +24,7 @@ module.exports = (cwd=undefined, packageName, type) => {
     activate = `source activate ./yac_environment &&`;
   }
 
-  // Execute install command:
+  // Execute remove command
   spawnSync(`${activate} ${cmd}`, [], options);
 
   // Update environment.yml file

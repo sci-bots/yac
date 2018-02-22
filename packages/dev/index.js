@@ -22,7 +22,7 @@ module.exports = (cwd=undefined, packageLocation, packageName) => {
 
   // Uninstall the package if it exists
   console.log("Attempting to uninstall package (if exists)");
-  spawnSync(`${activate} conda uninstall ${packageName} || true`, [], options);
+  spawnSync(`${activate} conda uninstall --force ${packageName} || true`, [], options);
   spawnSync(`${activate} pip uninstall ${packageName} || true`, [], options);
   console.log("Uninstall complete");
 

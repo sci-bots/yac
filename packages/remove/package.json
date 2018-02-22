@@ -1,0 +1,12 @@
+{
+  "name": "@yac/remove",
+  "version": "0.0.1",
+  "description": "Remove yac package",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "publishConfig": {
+      "access": "public"
+  }
+}

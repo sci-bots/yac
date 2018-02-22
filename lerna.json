@@ -6,6 +6,7 @@
     "packages/install",
     "packages/exec",
     "packages/add",
+    "packages/remove",
     "packages/dev"
   ],
   "version": "0.0.2",

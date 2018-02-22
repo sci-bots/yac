@@ -8,6 +8,7 @@ const yacInstall = require('@yac/install');
 const yacExec = require('@yac/exec');
 const yacAdd = require('@yac/add');
 const yacDev = require('@yac/dev');
+const yacRemove = require('@yac/remove');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -35,7 +36,11 @@ const argv = require('yargs')
   })
   .command('add <packageName> [type]', 'add package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';
-    yacAdd(CWD(argv), argv.type, argv.packageName);
+    yacAdd(CWD(argv), argv.packageName, argv.type);
+  })
+  .command('remove <packageName> [type]', 'remove package through conda or pip', () => {}, (argv) => {
+    if (argv.type == undefined) argv.type = 'conda';
+    yacRemove(CWD(argv), argv.packageName, argv.type);
   })
   .command('dev <packageLocation> [packageName]', 'link local package', () => {}, (argv) => {
     if (argv.packageName == undefined) argv.packageName = path.basename(packageLocation);
