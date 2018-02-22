@@ -1,19 +1,19 @@
 {
   "name": "@yac/yac",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Multi-Language Package Management",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
+    "@yac/add": "^0.0.1",
+    "@yac/dev": "^0.0.1",
+    "@yac/exec": "^0.0.1",
+    "@yac/init": "^0.0.1",
+    "@yac/install": "^0.0.1",
     "hasbin": "^1.2.3",
-    "yargs": "^11.0.0",
-    "@yac/init" : "^0.0.0",
-    "@yac/install": "^0.0.0",
-    "@yac/exec": "^0.0.0",
-    "@yac/add": "^0.0.0",
-    "@yac/dev": "^0.0.0"
+    "yargs": "^11.0.0"
   },
   "publishConfig": {
     "access": "public"

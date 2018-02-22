@@ -1,6 +1,6 @@
 {
   "name": "@yac/add",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Add Conda, Pip (and soon Node) packages to yac project",
   "main": "index.js",
   "author": "Sci-Bots",

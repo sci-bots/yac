@@ -1,6 +1,6 @@
 {
   "name": "@yac/init",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generator for initializing a Yac project",
   "main": "index.js",
   "author": "Sci-Bots",
