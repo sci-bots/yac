@@ -1,2 +1,4 @@
 **/node_modules/*
 **/tmp/*
+lerna-debug.log
+**/*/yarn-error.log
