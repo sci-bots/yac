@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <b>A yarn-like package manager for any language. Powered by Conda environments.</b>
+  <b>A yarn-like package manager for any language.</b>
   <br><br>
   <img alt="Yac!" width="300" src="https://raw.githubusercontent.com/sci-bots/yac/master/docs/images/pexels-photo-671931.jpeg">
 </p>
