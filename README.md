@@ -1,4 +1,4 @@
-<p align="left">
+<p align="center">
   <img alt="Yac!" width="150" src="https://raw.githubusercontent.com/sci-bots/yac/master/docs/images/textfx.png">
   <br/>
 </p>
