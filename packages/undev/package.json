@@ -1,0 +1,12 @@
+{
+  "name": "@yac/undev",
+  "version": "0.0.3",
+  "description": "Remove dev package",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

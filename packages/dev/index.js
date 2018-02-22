@@ -9,10 +9,6 @@ module.exports = (cwd=undefined, packageLocation, packageName) => {
   if (packageName == undefined) packageName = path.basename(packageLocation);
   options.cwd = cwd;
 
-  // "dev": "yarn dev-p1 && yarn dev-p2",
-  // "dev-p1": "source activate ./environment || true && activate ./environment || true && pip uninstall micropede || true",
-  // "dev-p2": "conda develop ../../../Micropede/packages/python -p ./environment"
-
   let activate;
   if (os.platform() == 'win32') {
     activate = `activate .\\yac_environment &&`;

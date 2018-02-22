@@ -8,6 +8,7 @@ const yacInstall = require('@yac/install');
 const yacExec = require('@yac/exec');
 const yacAdd = require('@yac/add');
 const yacDev = require('@yac/dev');
+const yacUndev = require('@yac/undev');
 const yacRemove = require('@yac/remove');
 
 const CWD = (argv) => {
@@ -45,5 +46,8 @@ const argv = require('yargs')
   .command('dev <packageLocation> [packageName]', 'link local package', () => {}, (argv) => {
     if (argv.packageName == undefined) argv.packageName = path.basename(packageLocation);
     yacDev(CWD(argv), argv.packageLocation, argv.packageName);
+  })
+  .command('undev <packageLocation>', 'unlink local package', () => {}, (argv) => {
+    yacUndev(CWD(argv), argv.packageLocation);
   })
 .argv;
