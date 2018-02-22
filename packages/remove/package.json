@@ -1,6 +1,6 @@
 {
   "name": "@yac/remove",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Remove yac package",
   "main": "index.js",
   "author": "Sci-Bots",
