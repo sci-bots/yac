@@ -1,0 +1,11 @@
+{
+  "name": "@yac/dev",
+  "version": "0.0.0",
+  "description": "link/add local package to environment",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "publishConfig": {
+    "access": "public"
+  }
+}

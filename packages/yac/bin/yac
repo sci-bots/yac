@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const path = require('path');
 const {spawnSync} = require('child_process');
 const hasbin = require('hasbin');
 
@@ -6,6 +7,7 @@ const yacInit = require('@yac/init');
 const yacInstall = require('@yac/install');
 const yacExec = require('@yac/exec');
 const yacAdd = require('@yac/add');
+const yacDev = require('@yac/dev');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -34,5 +36,9 @@ const argv = require('yargs')
   .command('add <packageName> [type]', 'add package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';
     yacAdd(CWD(argv), argv.type, argv.packageName);
+  })
+  .command('dev <packageLocation> [packageName]', 'link local package', () => {}, (argv) => {
+    if (argv.packageName == undefined) argv.packageName = path.basename(packageLocation);
+    yacDev(CWD(argv), argv.packageLocation, argv.packageName);
   })
 .argv;

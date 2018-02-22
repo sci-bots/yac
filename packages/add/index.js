@@ -21,7 +21,7 @@ module.exports = (cwd=undefined, type, packageName) => {
 
   let activate;
   if (os.platform() == 'win32') {
-    activate = `activate .\\yac_environment ;`;
+    activate = `activate .\\yac_environment &&`;
   } else {
     activate = `source activate ./yac_environment &&`;
   }
