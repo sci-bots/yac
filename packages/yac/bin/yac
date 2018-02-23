@@ -10,6 +10,7 @@ const yacDev = require('@yac/dev');
 const yacUndev = require('@yac/undev');
 const yacRemove = require('@yac/remove');
 const yacTrack = require('@yac/track');
+const yacList = require('@yac/list');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -50,5 +51,8 @@ const argv = require('yargs')
   })
   .command('track', 'track yac package', () => {}, (argv) => {
     yacTrack(CWD(argv));
+  })
+  .command('list', 'list yac packages', () => {}, (argv) => {
+    yacList(CWD(argv));
   })
 .argv;

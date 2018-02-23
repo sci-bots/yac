@@ -9,7 +9,8 @@
     "packages/remove",
     "packages/dev",
     "packages/undev",
-    "packages/track"
+    "packages/track",
+    "packages/list"
   ],
   "version": "0.0.6",
   "npmClient": "yarn"

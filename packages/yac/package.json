@@ -12,6 +12,7 @@
     "@yac/exec": "^0.0.1",
     "@yac/init": "^0.0.1",
     "@yac/install": "^0.0.5",
+    "@yac/list": "^0.0.6",
     "@yac/remove": "^0.0.5",
     "@yac/track": "^0.0.6",
     "@yac/undev": "^0.0.5",

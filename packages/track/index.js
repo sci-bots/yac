@@ -47,6 +47,17 @@ module.exports = (cwd=undefined) => {
 
 }
 
+module.exports.getInfo = () => {
+  const yacInfoFile = path.resolve(__dirname, 'yacinfo.json');
+
+  if (!fs.existsSync(yacInfoFile)) {
+    yacInfo.yacProjects = [];
+    return yacInfo;
+  } else {
+    return JSON.parse(fs.readFileSync(yacInfoFile));
+  }
+}
+
 if (require.main === module) {
   module.exports();
 }
