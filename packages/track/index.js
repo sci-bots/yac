@@ -58,6 +58,11 @@ module.exports.getInfo = () => {
   }
 }
 
+module.exports.writeInfo = (info) => {
+  const yacInfoFile = path.resolve(__dirname, 'yacinfo.json');
+  fs.writeFileSync(yacInfoFile, JSON.stringify(info, null, 4));
+}
+
 if (require.main === module) {
   module.exports();
 }

@@ -1,6 +1,6 @@
 {
   "name": "@yac/yac",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Multi-Language Package Management",
   "main": "index.js",
   "author": "Sci-Bots",
@@ -8,15 +8,16 @@
   "private": false,
   "dependencies": {
     "@yac/add": "^0.0.5",
-    "@yac/dashboard": "^0.0.8",
+    "@yac/dashboard": "^0.0.9",
     "@yac/dev": "^0.0.5",
     "@yac/exec": "^0.0.1",
     "@yac/init": "^0.0.1",
     "@yac/install": "^0.0.5",
-    "@yac/list": "^0.0.7",
+    "@yac/list": "^0.0.9",
     "@yac/remove": "^0.0.5",
-    "@yac/track": "^0.0.7",
+    "@yac/track": "^0.0.9",
     "@yac/undev": "^0.0.5",
+    "@yac/untrack": "^0.0.9",
     "yargs": "^11.0.0"
   },
   "publishConfig": {

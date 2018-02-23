@@ -10,6 +10,7 @@ const yacDev = require('@yac/dev');
 const yacUndev = require('@yac/undev');
 const yacRemove = require('@yac/remove');
 const yacTrack = require('@yac/track');
+const yacUntrack = require('@yac/untrack');
 const yacList = require('@yac/list');
 const yacDashboard = require('@yac/dashboard');
 
@@ -50,8 +51,11 @@ const argv = require('yargs')
   .command('undev <packageLocation>', 'unlink local package', () => {}, (argv) => {
     yacUndev(CWD(argv), argv.packageLocation);
   })
-  .command('track', 'track yac package', () => {}, (argv) => {
+  .command('track', 'track a yac package', () => {}, (argv) => {
     yacTrack(CWD(argv));
+  })
+  .command('untrack', 'untrack a yac package', () => {}, (argv) => {
+    yacUntrack(CWD(argv));
   })
   .command('list', 'list yac packages', () => {}, (argv) => {
     yacList(CWD(argv));

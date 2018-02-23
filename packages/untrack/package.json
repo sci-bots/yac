@@ -1,7 +1,7 @@
 {
-  "name": "@yac/list",
+  "name": "@yac/untrack",
   "version": "0.0.9",
-  "description": "List yac packages being tracked",
+  "description": "Untrack a yac package",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",

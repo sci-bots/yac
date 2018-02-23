@@ -1,13 +1,13 @@
 {
   "name": "@yac/dashboard",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Dashboard for managing yac projects",
   "main": "app.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/track": "^0.0.7",
+    "@yac/track": "^0.0.9",
     "bootstrap": "^4.0.0",
     "browser-request": "^0.3.3",
     "css-loader": "^0.28.10",
