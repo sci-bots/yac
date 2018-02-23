@@ -1,0 +1,15 @@
+{
+  "name": "@yac/track",
+  "version": "0.0.4",
+  "description": "Track yac packages",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lodash": "^4.17.5"
+  }
+}

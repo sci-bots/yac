@@ -9,10 +9,11 @@ const yacAdd = require('@yac/add');
 const yacDev = require('@yac/dev');
 const yacUndev = require('@yac/undev');
 const yacRemove = require('@yac/remove');
+const yacTrack = require('@yac/track');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
-  return argv.cwd;
+  return path.resolve(argv.cwd);
 }
 
 const argv = require('yargs')
@@ -46,5 +47,8 @@ const argv = require('yargs')
   })
   .command('undev <packageLocation>', 'unlink local package', () => {}, (argv) => {
     yacUndev(CWD(argv), argv.packageLocation);
+  })
+  .command('track', 'track yac package', () => {}, (argv) => {
+    yacTrack(CWD(argv));
   })
 .argv;

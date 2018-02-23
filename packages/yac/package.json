@@ -13,6 +13,7 @@
     "@yac/init": "^0.0.1",
     "@yac/install": "^0.0.5",
     "@yac/remove": "^0.0.5",
+    "@yac/track": "^0.0.4",
     "@yac/undev": "^0.0.5",
     "yargs": "^11.0.0"
   },
