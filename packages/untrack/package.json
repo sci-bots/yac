@@ -1,13 +1,13 @@
 {
   "name": "@yac/untrack",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Untrack a yac package",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/track": "^0.0.9",
+    "@yac/track": "^0.0.10",
     "lodash": "^4.17.5"
   }
 }
