@@ -16,6 +16,7 @@
     "@yac/remove": "^0.0.5",
     "@yac/track": "^0.0.7",
     "@yac/undev": "^0.0.5",
+    "@yac/dashboard": "^0.0.7",
     "yargs": "^11.0.0"
   },
   "publishConfig": {

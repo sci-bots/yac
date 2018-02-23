@@ -10,7 +10,8 @@
     "packages/dev",
     "packages/undev",
     "packages/track",
-    "packages/list"
+    "packages/list",
+    "packages/dashboard"
   ],
   "version": "0.0.7",
   "npmClient": "yarn"
