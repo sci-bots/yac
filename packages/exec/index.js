@@ -1,9 +1,9 @@
 const os = require('os');
-const {spawnSync} = require('child_process');
+const {spawn, spawnSync} = require('child_process');
 
 let options = {stdio: 'inherit', shell: true};
 
-module.exports = (cwd=undefined, cmd) => {
+module.exports = (cwd=undefined, cmd, sync=true) => {
   if (cwd == undefined) cwd = process.cwd();
   options.cwd = cwd;
 
@@ -14,7 +14,12 @@ module.exports = (cwd=undefined, cmd) => {
   }
 
   console.log("Executing: ", cmd);
-  spawnSync(cmd,[], options);
+
+  let child;
+  if (sync == true) child = spawnSync(cmd, [], options);
+  if (sync != true) child = spawn(cmd, [], options);
+
+  return child;
 }
 
 if (require.main === module) {
