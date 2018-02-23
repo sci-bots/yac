@@ -1,6 +1,6 @@
 {
   "name": "@yac/undev",
-  "version": "0.0.5",
+  "version": "0.0.11",
   "description": "Remove dev package",
   "main": "index.js",
   "author": "Sci-Bots",

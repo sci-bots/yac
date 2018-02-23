@@ -1,6 +1,6 @@
 {
   "name": "@yac/exec",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Execute command in yac_environment",
   "main": "index.js",
   "author": "Sci-Bots",
