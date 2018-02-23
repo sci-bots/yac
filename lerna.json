@@ -12,7 +12,8 @@
     "packages/track",
     "packages/list",
     "packages/dashboard",
-    "packages/untrack"
+    "packages/untrack",
+    "packages/process-management"
   ],
   "version": "0.0.10",
   "npmClient": "yarn"

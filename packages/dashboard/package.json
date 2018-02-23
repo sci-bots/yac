@@ -8,6 +8,7 @@
   "private": false,
   "dependencies": {
     "@yac/exec": "^0.0.10",
+    "@yac/process-management": "^0.0.10",
     "@yac/track": "^0.0.10",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
@@ -19,7 +20,6 @@
     "popper.js": "^1.12.9",
     "sha256": "^0.2.0",
     "style-loader": "^0.20.2",
-    "terminate": "^2.1.0",
     "yo-yo": "^1.4.1"
   }
 }

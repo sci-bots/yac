@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@yac/track@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@yac/track/-/track-0.0.6.tgz#bcef1ff89e05efb5e75ba7ed47fae16801bb2eb3"
-  dependencies:
-    lodash "^4.17.5"
-
 lodash@^4.17.5:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"

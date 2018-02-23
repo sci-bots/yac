@@ -68,7 +68,6 @@ class YacDashboard {
     request('/yacInfo.json', (err, res, body) => {
       let {projects, hash} = JSON.parse(body);
       if (hash == prevHash) return;
-      projects = JSON.parse(projects);
       prevHash = hash;
 
       this.container.innerHTML = "";

@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@yac/exec@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@yac/exec/-/exec-0.0.1.tgz#8dc60be21317fc0bad016c7221cbb6e6a9442afb"
+"@yac/exec@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@yac/exec/-/exec-0.0.10.tgz#aed0ee0775964b22151bb7e7eb92e779f2ace158"
 
-"@yac/track@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@yac/track/-/track-0.0.9.tgz#09f340af5bb23944293e6b3aca3568c4a82851c6"
+"@yac/track@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@yac/track/-/track-0.0.10.tgz#f6e29beb5971f45d1b98ba5f26a986d405418967"
   dependencies:
     lodash "^4.17.5"
 
@@ -558,6 +558,10 @@ is-absolute-url@^2.0.0:
 is-plain-obj@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
+
+is-running@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/is-running/-/is-running-2.1.0.tgz#30a73ff5cc3854e4fc25490809e9f5abf8de09e0"
 
 is-svg@^2.0.0:
   version "2.1.0"

@@ -1,0 +1,16 @@
+{
+  "name": "@yac/process-management",
+  "version": "0.0.10",
+  "description": "Helper methods for handling yac process'",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "dependencies": {
+    "@yac/exec": "^0.0.10",
+    "@yac/track": "^0.0.10",
+    "is-running": "^2.1.0",
+    "lodash": "^4.17.5",
+    "terminate": "^2.1.0"
+  }
+}
