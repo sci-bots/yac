@@ -1,6 +1,6 @@
 {
   "name": "@yac/track",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Track yac packages",
   "main": "index.js",
   "author": "Sci-Bots",
