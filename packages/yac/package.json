@@ -1,6 +1,6 @@
 {
   "name": "@yac/yac",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Multi-Language Package Management",
   "main": "index.js",
   "author": "Sci-Bots",
@@ -12,9 +12,9 @@
     "@yac/exec": "^0.0.1",
     "@yac/init": "^0.0.1",
     "@yac/install": "^0.0.5",
-    "@yac/list": "^0.0.6",
+    "@yac/list": "^0.0.7",
     "@yac/remove": "^0.0.5",
-    "@yac/track": "^0.0.6",
+    "@yac/track": "^0.0.7",
     "@yac/undev": "^0.0.5",
     "yargs": "^11.0.0"
   },
