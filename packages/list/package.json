@@ -1,13 +1,13 @@
 {
   "name": "@yac/list",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "List yac packages being tracked",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/track": "^0.0.11",
+    "@yac/track": "^0.0.12",
     "lodash": "^4.17.5"
   }
 }
