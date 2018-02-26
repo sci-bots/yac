@@ -34,17 +34,18 @@ const launchProject = (p) => {
     path: ${p.path}
     name: ${p.name}
   `;
+
   const child = yacExec(p.path, pkgJson.main, false, false);
   let proc = _.extend(p, {pid: child.pid});
   proc.log = [];
 
   child.stdout.on('data', (data) => {
-    proc.log.push(data.toString());
+    proc.log.push(data.toString().trim());
     console.log(proc.log);
   });
 
   child.stderr.on('data', (data) => {
-    proc.log.push(data.toString());
+    proc.log.push(data.toString().trim());
     console.log(proc.log);
   });
 
@@ -52,9 +53,17 @@ const launchProject = (p) => {
   return child.pid
 };
 
-const terminateProject = async (p) => {
-  console.log("TERMINATING!!");
+const _removeProcess = (p, info) => {
+  if (info == undefined) info = yacTrack.getInfo();
+  const projects = info.yacProjects;
+  const project = _.find(projects, {name: p.name, path: p.path});
+  project.prevLog = p.log;
   _.remove(processes, {pid: p.pid});
+  yacTrack.writeInfo(info);
+}
+
+const terminateProject = async (p) => {
+  _removeProcess(p);
   let err = await new Promise((r,b) => {terminate(p.pid, (e)=>r(e))});
   if (err) throw err;
   return;
@@ -63,19 +72,13 @@ const terminateProject = async (p) => {
 const removeZombies = (processes) => {
   /* Remove projects that are no longer running */
   const info = yacTrack.getInfo();
-  const projects = info.yacProjects;
 
   _.each(processes, (p) => {
     if (!isRunning(p.pid)) {
       // Store the log of the process, and then remove
-      const project = _.find(projects, {name: p.name, path: p.path});
-      project.prevLog = p.log;
-      _.remove(processes, {pid: p.pid});
+      _removeProcess(p, info);
     }
   });
-
-  // Update project info in yac tracker
-  yacTrack.writeInfo(info);
 
   return processes;
 };

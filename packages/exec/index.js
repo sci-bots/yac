@@ -1,7 +1,10 @@
 const os = require('os');
 const {spawn, spawnSync} = require('child_process');
 
-let options = {stdio: 'inherit', shell: true};
+const env = process.env;
+env["PYTHONUNBUFFERED"] = 1;
+
+let options = {stdio: 'inherit', shell: true, env: env};
 
 module.exports = (cwd=undefined, cmd, sync=true, inherit=true) => {
   if (cwd == undefined) cwd = process.cwd();

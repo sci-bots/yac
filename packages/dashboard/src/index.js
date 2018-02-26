@@ -107,8 +107,12 @@ class YacDashboard {
                     onmouseout=${function (){_.extend(this.style, Styles.miniLogOut)}}
                     onclick=${this.expandLog.bind(this, p.log, p.prevLog)}
                     style="${Styles.miniLog}">
-                    <p style="margin: 0px; color: #23f100;">${p.log}</p>
-                    <p style="margin: 0px; color: #afafaf">${p.prevLog}</p>
+                    <div style="margin: 0px; color: #23f100;">
+                      ${_.map(p.log || [], (d) => yo`<div>${d}</div>`)}
+                    </div>
+                    <div style="margin: 0px; color: #afafaf;">
+                      ${_.map(p.prevLog || [], (d) => yo`<div>${d}</div>`)}
+                    </div>
                   </div>
                 `, 'last')}
               </div>
