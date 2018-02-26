@@ -39,13 +39,13 @@ const launchProject = (p) => {
   proc.log = [];
 
   child.stdout.on('data', (data) => {
-    console.log(data.toString());
     proc.log.push(data.toString());
+    console.log(proc.log);
   });
 
   child.stderr.on('data', (data) => {
-    console.log(data.toString());
     proc.log.push(data.toString());
+    console.log(proc.log);
   });
 
   processes.push(proc);
@@ -62,9 +62,21 @@ const terminateProject = async (p) => {
 
 const removeZombies = (processes) => {
   /* Remove projects that are no longer running */
+  const info = yacTrack.getInfo();
+  const projects = info.yacProjects;
+
   _.each(processes, (p) => {
-    if (!isRunning(p.pid)) _.remove(processes, {pid: p.pid});
+    if (!isRunning(p.pid)) {
+      // Store the log of the process, and then remove
+      const project = _.find(projects, {name: p.name, path: p.path});
+      project.prevLog = p.log;
+      _.remove(processes, {pid: p.pid});
+    }
   });
+
+  // Update project info in yac tracker
+  yacTrack.writeInfo(info);
+
   return processes;
 };
 

@@ -2,16 +2,6 @@
 # yarn lockfile v1
 
 
-"@yac/exec@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@yac/exec/-/exec-0.0.10.tgz#aed0ee0775964b22151bb7e7eb92e779f2ace158"
-
-"@yac/track@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@yac/track/-/track-0.0.10.tgz#f6e29beb5971f45d1b98ba5f26a986d405418967"
-  dependencies:
-    lodash "^4.17.5"
-
 duplexer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"

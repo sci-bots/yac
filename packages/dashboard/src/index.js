@@ -64,10 +64,17 @@ class YacDashboard {
     });
   }
 
+  expandLog(log, prevLog, e) {
+    console.log("EXPANDING LOG!");
+    console.log(args);
+  }
+
   render() {
     request('/yacInfo.json', (err, res, body) => {
       let {projects, hash} = JSON.parse(body);
       if (hash == prevHash) return;
+
+      console.log({projects});
       prevHash = hash;
 
       this.container.innerHTML = "";
@@ -94,7 +101,16 @@ class YacDashboard {
                 ${DashboardColumn(
                     DashboardButton(p, this.startPlugin.bind(this)),
                   'mid')}
-                ${DashboardColumn(p.log, 'last')}
+                ${DashboardColumn(yo`
+                  <div
+                    onmouseover=${function (){_.extend(this.style, Styles.miniLogOver)}}
+                    onmouseout=${function (){_.extend(this.style, Styles.miniLogOut)}}
+                    onclick=${this.expandLog.bind(this, p.log, p.prevLog)}
+                    style="${Styles.miniLog}">
+                    <p style="margin: 0px; color: #23f100;">${p.log}</p>
+                    <p style="margin: 0px; color: #afafaf">${p.prevLog}</p>
+                  </div>
+                `, 'last')}
               </div>
             `
             )}
@@ -112,7 +128,24 @@ const Styles = {
   container: `
     background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.65), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  `
+  `,
+  miniLog: `
+    background: #1b1b1b;
+    font-size: 10px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+  `,
+  miniLogOver: {
+    backgroundColor: 'black'
+  },
+  miniLogOut: {
+    backgroundColor: '#1b1b1b'
+  }
 }
 
 module.exports = YacDashboard;
