@@ -3,7 +3,7 @@ const {spawn, spawnSync} = require('child_process');
 
 let options = {stdio: 'inherit', shell: true};
 
-module.exports = (cwd=undefined, cmd, sync=true) => {
+module.exports = (cwd=undefined, cmd, sync=true, inherit=true) => {
   if (cwd == undefined) cwd = process.cwd();
   options.cwd = cwd;
 
@@ -17,7 +17,10 @@ module.exports = (cwd=undefined, cmd, sync=true) => {
 
   let child;
   if (sync == true) child = spawnSync(cmd, [], options);
-  if (sync != true) child = spawn(cmd, [], options);
+  if (sync != true) {
+    if (inherit == false) options.stdio = 'pipe';
+    child = spawn(cmd, [], options);
+  }
 
   return child;
 }

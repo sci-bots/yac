@@ -17,7 +17,10 @@ const getRunningProjects = () => {
   const info = yacTrack.getInfo();
   const projects = _.map(info.yacProjects, (project) => {
     let p = _.find(processes, {name: project.name, path: project.path});
-    if (p != undefined) project.pid = p.pid;
+    if (p != undefined) {
+      project.pid = p.pid;
+      project.log = p.log;
+    }
     return project
   });
 
@@ -31,12 +34,26 @@ const launchProject = (p) => {
     path: ${p.path}
     name: ${p.name}
   `;
-  const child = yacExec(p.path, pkgJson.main, false);
-  processes.push(_.extend(p, {pid: child.pid}));
+  const child = yacExec(p.path, pkgJson.main, false, false);
+  let proc = _.extend(p, {pid: child.pid});
+  proc.log = [];
+
+  child.stdout.on('data', (data) => {
+    console.log(data.toString());
+    proc.log.push(data.toString());
+  });
+
+  child.stderr.on('data', (data) => {
+    console.log(data.toString());
+    proc.log.push(data.toString());
+  });
+
+  processes.push(proc);
   return child.pid
 };
 
 const terminateProject = async (p) => {
+  console.log("TERMINATING!!");
   _.remove(processes, {pid: p.pid});
   let err = await new Promise((r,b) => {terminate(p.pid, (e)=>r(e))});
   if (err) throw err;

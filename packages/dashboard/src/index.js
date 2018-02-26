@@ -83,7 +83,8 @@ class YacDashboard {
             ${DashboardColumn('Project Name', 'first', 'first')}
             ${DashboardColumn('Project Path', 'mid', 'first')}
             ${DashboardColumn('Process ID', 'mid', 'first')}
-            ${DashboardColumn('Start/Stop', 'last', 'first')}
+            ${DashboardColumn('Start/Stop', 'mid', 'first')}
+            ${DashboardColumn('Logs', 'last', 'first')}
           </div>
             ${_.map(projects, (p) => yo`
               <div class="row">
@@ -92,7 +93,8 @@ class YacDashboard {
                 ${DashboardColumn(p.pid || 'not running', 'mid')}
                 ${DashboardColumn(
                     DashboardButton(p, this.startPlugin.bind(this)),
-                  'last')}
+                  'mid')}
+                ${DashboardColumn(p.log, 'last')}
               </div>
             `
             )}
