@@ -59,10 +59,10 @@ Options:
 
 ## Dashboard
 
- You can launch processes in tracked yac packages similar to docker containers. The launch script should be specified in the "main" file of the yack projects' package.json. 
+ You can launch processes in tracked yac packages similar to docker containers. The launch script should be specified in the "main" file of the yac projects' package.json. 
  
  ```
- yack dashboard
+ yac dashboard
  ```
  <img alt="Dashboard" src="https://raw.githubusercontent.com/sci-bots/yac/master/docs/images/dashboard_design.PNG">
 
