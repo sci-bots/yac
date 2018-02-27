@@ -1,6 +1,6 @@
 {
   "name": "@yac/process-management",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "description": "Helper methods for handling yac process'",
   "main": "index.js",
   "author": "Sci-Bots",
