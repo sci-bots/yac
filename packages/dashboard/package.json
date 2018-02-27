@@ -1,6 +1,6 @@
 {
   "name": "@yac/dashboard",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Dashboard for managing yac projects",
   "main": "app.js",
   "author": "Sci-Bots",
