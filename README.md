@@ -56,3 +56,14 @@ Options:
   --version  Show version number                                       [boolean]
   --cwd      change directory of execution                              [string]
 ```
+
+## Dashboard
+
+ You can launch processes in tracked yac packages similar to docker containers. The launch script should be specified in the "main" file of the yac projects' package.json. 
+ 
+ ```
+ yac dashboard
+ ```
+ <img alt="Dashboard" src="https://raw.githubusercontent.com/sci-bots/yac/master/docs/images/dashboard_design.PNG">
+
+ 
