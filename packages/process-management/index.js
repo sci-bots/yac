@@ -40,12 +40,12 @@ const launchProject = (p) => {
   proc.log = [];
 
   child.stdout.on('data', (data) => {
-    proc.log.push(data.toString().trim());
+    proc.log.unshift(data.toString().trim());
     console.log(proc.log);
   });
 
   child.stderr.on('data', (data) => {
-    proc.log.push(data.toString().trim());
+    proc.log.unshift(data.toString().trim());
     console.log(proc.log);
   });
 

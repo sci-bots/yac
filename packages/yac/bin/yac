@@ -2,17 +2,7 @@
 const path = require('path');
 const {spawnSync} = require('child_process');
 
-const yacInit = require('@yac/init');
-const yacInstall = require('@yac/install');
-const yacExec = require('@yac/exec');
-const yacAdd = require('@yac/add');
-const yacDev = require('@yac/dev');
-const yacUndev = require('@yac/undev');
-const yacRemove = require('@yac/remove');
-const yacTrack = require('@yac/track');
-const yacUntrack = require('@yac/untrack');
-const yacList = require('@yac/list');
-const yacDashboard = require('@yac/dashboard');
+const yac = require('@yac/api');
 
 const CWD = (argv) => {
   if (argv.cwd == undefined) { argv.cwd = process.cwd(); }
@@ -28,39 +18,39 @@ const argv = require('yargs')
     spawnSync('conda info', [], {stdio: 'inherit', shell: true});
   })
   .command('init', 'initialize a yac project', () => {}, (argv) => {
-    yacInit(CWD(argv));
+    yac.init(CWD(argv));
   })
   .command('install', 'install dependencies', () => {}, (argv) => {
-    yacInstall(CWD(argv));
+    yac.install(CWD(argv));
   })
   .command('exec <cmd>', 'execute command inside yac environment', () => {}, (argv) => {
-    yacExec(CWD(argv), argv.cmd);
+    yac.exec(CWD(argv), argv.cmd);
   })
   .command('add <packageName> [type]', 'add package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';
-    yacAdd(CWD(argv), argv.packageName, argv.type);
+    yac.add(CWD(argv), argv.packageName, argv.type);
   })
   .command('remove <packageName> [type]', 'remove package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';
-    yacRemove(CWD(argv), argv.packageName, argv.type);
+    yac.remove(CWD(argv), argv.packageName, argv.type);
   })
   .command('dev <packageLocation> [packageName]', 'link local package', () => {}, (argv) => {
     if (argv.packageName == undefined) argv.packageName = path.basename(packageLocation);
-    yacDev(CWD(argv), argv.packageLocation, argv.packageName);
+    yac.dev(CWD(argv), argv.packageLocation, argv.packageName);
   })
   .command('undev <packageLocation>', 'unlink local package', () => {}, (argv) => {
-    yacUndev(CWD(argv), argv.packageLocation);
+    yac.undev(CWD(argv), argv.packageLocation);
   })
   .command('track', 'track a yac package', () => {}, (argv) => {
-    yacTrack(CWD(argv));
+    yac.track(CWD(argv));
   })
   .command('untrack', 'untrack a yac package', () => {}, (argv) => {
-    yacUntrack(CWD(argv));
+    yac.untrack(CWD(argv));
   })
   .command('list', 'list yac packages', () => {}, (argv) => {
-    yacList(CWD(argv));
+    yac.list(CWD(argv));
   })
   .command('dashboard', 'start dashboard for managing yac packages', () => {}, (argv) => {
-    yacDashboard(CWD(argv));
+    yac.dashboard(CWD(argv));
   })
 .argv;

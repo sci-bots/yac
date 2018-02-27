@@ -36,6 +36,7 @@ const ProjectLog = (p) => {
       <div class="row" style="color: #23f100; display: block;padding:10px;">
         ${_.map(p.log || [], (d) => yo`<div>${d}</div>`)}
       </div>
+      <div>------</div>
       <div class="row" style="display: block;padding:10px;">
         ${_.map(p.prevLog || [], (d) => yo`<div>${d}</div>`)}
       </div>

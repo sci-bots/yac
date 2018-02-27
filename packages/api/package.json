@@ -1,0 +1,23 @@
+{
+  "name": "@yac/api",
+  "version": "0.0.14",
+  "description": "Remote API for Yac",
+  "main": "index.js",
+  "author": "Sci-Bots",
+  "license": "BSD-2-Clause",
+  "private": false,
+  "dependencies": {
+    "@yac/add": "0.0.12",
+    "@yac/dashboard": "0.0.13",
+    "@yac/dev": "0.0.12",
+    "@yac/exec": "0.0.12",
+    "@yac/init": "0.0.1",
+    "@yac/install": "0.0.12",
+    "@yac/list": "0.0.12",
+    "@yac/process-management": "0.0.12",
+    "@yac/remove": "0.0.12",
+    "@yac/track": "0.0.12",
+    "@yac/undev": "0.0.12",
+    "@yac/untrack": "0.0.12"
+  }
+}
