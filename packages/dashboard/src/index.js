@@ -9,39 +9,64 @@ const STOP_MSG = 'Stop';
 
 let prevHash = "";
 
-const DashboardColumn = (content, colPos='mid', rowPos='mid') => {
-  const Styles = {
-    col: `
-      border-radius: 0px;
-      border: 1px solid #d2d2d2;
-      padding:10px;
-      ${colPos == 'first' ? "border-right: none" : ""};
-      ${colPos == 'last' ?  "border-left: none" : ""};
-      ${rowPos == 'first' ? "border-bottom: none" : ""};
-      background: none;
-      ${rowPos == 'first' ? "background: #f1f1f1" : ""};
-    `
-  }
-  return yo`
-  <div class="col-sm" style="${Styles.col}">
-    ${content}
-  </div>
-  `
-}
+const ProjectHeader = (p) => {
+  let style = `background: #f9f9f9; color:black;
+    height: 42px; border-bottom: 1px solid gainsboro;
+    font-size: 12px; padding-top: 9px;
+    text-align: center;`;
 
-const DashboardButton = (p, callback) => {
-  let msg;
-  if (p.pid != undefined) msg = STOP_MSG;
-  if (p.pid == undefined) msg = START_MSG;
+  let colStyle=`
+    background:#f9f9f9; top:-3px;
+  `;
+
+  if (p == undefined) return yo`<div class="row" style="${style}"></div>`;
 
   return yo`
-    <button type="button"
-      class="btn btn-${p.pid == undefined ? 'success' : 'danger'}"
-      onclick=${callback.bind(this, p, msg)}>
-      ${msg}
-    </button>
-  `
+    <div class="row" style="${style}">
+      <div class="col-sm-4" style="${colStyle}">${p.name}</div>
+      <div class="col-sm-4" style="${colStyle}">${p.path}</div>
+      <div class="col-sm-4" style="${colStyle}">${p.pid || "stopped"}</div>
+    </div>
+  `;
+};
+
+const ProjectLog = (p) => {
+  return yo`
+    <div>
+      <div class="row" style="color: #23f100; display: block;padding:10px;">
+        ${_.map(p.log || [], (d) => yo`<div>${d}</div>`)}
+      </div>
+      <div class="row" style="display: block;padding:10px;">
+        ${_.map(p.prevLog || [], (d) => yo`<div>${d}</div>`)}
+      </div>
+    </div>
+  `;
 }
+
+const ProjectListItem = (p, onclick, onstart, onstop) => {
+  return yo`
+    <a class="btn btn-outline-secondary"
+      style="width:100%;" href="#project__${p.name}__${p.path}"
+      onclick=${onclick.bind(undefined, p.name, p.path)}>
+      <div style="overflow:hidden;">${p.name}</div>
+      <div style="overflow:hidden;font-size: 13px;">${p.path}</div>
+      <div style="text-align:center;">
+        <button class="btn btn-success"
+          style="${Styles.startButton}"
+          onclick=${onstart.bind(undefined, p)}
+          ${
+            p.pid ? "disabled" : ""
+          }>Start</button>
+        <button class="btn btn-danger"
+          style="${Styles.startButton}"
+          onclick="${onstop.bind(undefined, p)}"
+          ${
+            p.pid ? "" : "disabled"
+          }>Stop</button>
+      </div>
+  </a>
+  `
+};
 
 class YacDashboard {
   constructor(container) {
@@ -53,10 +78,7 @@ class YacDashboard {
     }, 500);
   }
 
-  startPlugin(p, msg, e){
-    if (msg == START_MSG) console.log("Starting!");
-    if (msg == STOP_MSG)  console.log("Stopping!");
-
+  start(p, e) {
     const body = JSON.stringify(p);
     const req = {method:'POST', url:'/start', body: body, json:true};
     request(req, (err, res, body) => {
@@ -69,7 +91,16 @@ class YacDashboard {
     console.log(args);
   }
 
-  render() {
+  render(projectName, projectPath) {
+    let anchor = window.location.hash.split("__");
+    if (projectName != undefined && projectPath != undefined) {
+      // Force redraw if project passed in
+      prevHash = '';
+    } else {
+      projectName = anchor[1];
+      projectPath = anchor[2];
+    }
+
     request('/yacInfo.json', (err, res, body) => {
       let {projects, hash} = JSON.parse(body);
       if (hash == prevHash) return;
@@ -77,47 +108,40 @@ class YacDashboard {
       console.log({projects});
       prevHash = hash;
 
+      let proj = _.find(projects, {name: projectName, path: projectPath});;
+
       this.container.innerHTML = "";
       this.container.appendChild(yo`
         <div class="container" style="${Styles.container}" >
-          <nav class="navbar navbar-light">
+          <nav class="navbar navbar-light" style="height:70px; min-height: 70px !important">
             <a class="navbar-brand" href="#">
               <img src="/logo.png" width="100" alt="">
             </a>
           </nav>
-
-          <div class="row">
-            ${DashboardColumn('Project Name', 'first', 'first')}
-            ${DashboardColumn('Project Path', 'mid', 'first')}
-            ${DashboardColumn('Process ID', 'mid', 'first')}
-            ${DashboardColumn('Start/Stop', 'mid', 'first')}
-            ${DashboardColumn('Logs', 'last', 'first')}
-          </div>
-            ${_.map(projects, (p) => yo`
-              <div class="row">
-                ${DashboardColumn(p.name, 'first')}
-                ${DashboardColumn(p.path, 'mid')}
-                ${DashboardColumn(p.pid || 'not running', 'mid')}
-                ${DashboardColumn(
-                    DashboardButton(p, this.startPlugin.bind(this)),
-                  'mid')}
-                ${DashboardColumn(yo`
-                  <div
-                    onmouseover=${function (){_.extend(this.style, Styles.miniLogOver)}}
-                    onmouseout=${function (){_.extend(this.style, Styles.miniLogOut)}}
-                    onclick=${this.expandLog.bind(this, p.log, p.prevLog)}
-                    style="${Styles.miniLog}">
-                    <div style="margin: 0px; color: #23f100;">
-                      ${_.map(p.log || [], (d) => yo`<div>${d}</div>`)}
-                    </div>
-                    <div style="margin: 0px; color: #afafaf;">
-                      ${_.map(p.prevLog || [], (d) => yo`<div>${d}</div>`)}
-                    </div>
-                  </div>
-                `, 'last')}
+          <div class="row" style="flex-grow: 1; border-top: 1px solid #c1c1c1">
+            <div class="col-sm-3" style="background: white;">
+              <div class="row" style="
+                height: 42px; margin-bottom: 18px;
+                border-bottom: 1px solid gainsboro; background: #f9f9f9">
               </div>
-            `
-            )}
+              ${_.map(projects, (p) => yo`
+                <div class="row">
+                  <div class="col-sm-12" style="padding: 5px;">
+                    ${ProjectListItem(p,
+                        this.render.bind(this),
+                        this.start.bind(this),
+                        this.start.bind(this)
+                      )}
+                  </div>
+                </div>
+              `)}
+            </div>
+            <div class="col-sm-9" id="dashboard:projectInfo"
+              style="background: #2b2b2b; overflow:auto; color:white;">
+              ${ProjectHeader(proj)}
+              ${ (proj == undefined) ? yo`<p></p>` : ProjectLog(proj)}
+            </div>
+          </div>
         </div>
       `);
     });
@@ -126,30 +150,28 @@ class YacDashboard {
 
 const Styles = {
   body: {
-    background: "#212529",
-    paddingTop: "16px"
+    background: "#f9f9f9",
+    paddingTop: "16px",
+    paddingBottom: "16px"
   },
   container: `
-    background: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.65), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  `,
-  miniLog: `
-    background: #1b1b1b;
-    font-size: 10px;
-    width: 100%;
+    background: #e0e0e0;
     height: 100%;
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    overflow: hidden;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #c1c1c1;
+    border-radius: 4px;
   `,
-  miniLogOver: {
-    backgroundColor: 'black'
-  },
-  miniLogOut: {
-    backgroundColor: '#1b1b1b'
-  }
+  headerRow: `
+    background: #f1f1f1;
+  `,
+  headerCol: `
+    padding: 10px;
+    text-align: center;
+  `,
+  startButton: `
+    font-size: 12px; font-weight: bold; padding: 1px 3px;
+  `
 }
 
 module.exports = YacDashboard;
