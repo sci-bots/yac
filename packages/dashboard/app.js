@@ -1,3 +1,4 @@
+const http = require('http');
 const {spawn} = require('child_process');
 const yacTrack = require('@yac/track');
 const yacManager = require('@yac/process-management');
@@ -7,27 +8,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sha256 = require('sha256');
 const _ = require('lodash');
-
+const io = require('socket.io');
 const options = {stdio: 'inherit', shell: true};
 
 let PORT=8009;
+let prevHash = '';
 let env = {};
+let app, server, socket;
 
-
-const info = () => {
-  const projects = yacManager.getRunningProjects();
-  const hash = sha256(JSON.stringify(projects));
-  return {projects, hash};
+const addKeywordFilter = (keyword) => {
+  env.keywordFilter = keyword;
 }
 
-const start = async (p) => {
+const setLogo = (file) => {
+  env.logo = file;
+}
+
+const info = () => {
+  return yacManager.getRunningProjects(env.keywordFilter);
+}
+
+const start = (p, callback) => {
   /* Start Yac Project */
-  if (p.pid == undefined) {
-    const pid = yacManager.launchProject(p);
-    return pid;
-  } else {
-    return await stop(p);
-  }
+  if (p.pid != undefined) throw ("Plugin appears to be running");
+  const pid = yacManager.launchProject(p, callback);
+  return pid;
 }
 
 const stop = async (p) => {
@@ -41,27 +46,66 @@ const main = (cwd=undefined, port=PORT) => {
   env.port = port;
   /* Track the yac package in the cwd */
   if (cwd == undefined) cwd = process.cwd();
-  const app = express();
+
+  app = express();
+  server = http.createServer(app);
+  socket = io(server);
+
   const pids = [];
   app.use(bodyParser.json());
-
   app.use(express.static(path.resolve(__dirname, 'public')))
+
+  app.get('/logo', (req, res) => {
+    res.sendFile(env.logo || path.resolve(__dirname, 'public/logo.png'));
+  });
 
   app.get('/yacInfo.json', (req, res) => {
     res.send(JSON.stringify(info()));
   });
 
-  app.post('/start', async (req, res) => {
+  setInterval(()=> {
+    let _info = info();
+    let hash = sha256(JSON.stringify(_info));
+    if (hash != prevHash) {
+      prevHash = hash;
+      socket.emit('data', _info);
+    }
+  }, 1500);
+
+  app.post('/stop', (req, res) => {
     try {
       const p = req.body;
-      start(p);
+      const proj = _.find(info(), {name: p.name, path: p.path});
+      if (!proj) throw("Could not find project");
+      if (!proj.pid) throw("Project is not running");
+      stop(proj);
+      res.send("done");
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: e.toString() });
     }
   });
 
-  app.listen(port, () => console.log(`Yac dashboard running on port ${port}`));
+  app.post('/start', (req, res) => {
+    try {
+      const p = req.body;
+      const proj = _.find(info(), {name: p.name, path: p.path});
+      if (!proj) throw("Could not find project");
+      if (proj.pid) throw("Project already running");
+      start(proj, (log) => {
+        socket.emit('data', info());
+      });
+      res.send(`${proj.pid}`);
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: e.toString() });
+    }
+  });
+
+  server.listen(port, 'localhost', null, () => {
+   console.log(`Yac dashboard running on port ${port}`) ;
+ });
+
 }
 
 const url = () => {
@@ -73,6 +117,8 @@ module.exports.url = url;
 module.exports.start = start;
 module.exports.stop = stop;
 module.exports.launchDashboard = main;
+module.exports.setLogo = setLogo;
+module.exports.addKeywordFilter = addKeywordFilter;
 
 if (require.main === module) {
   module.exports();

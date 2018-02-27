@@ -9,7 +9,7 @@ const yacExec = require('@yac/exec');
 
 let processes = [];
 
-const getRunningProjects = () => {
+const getRunningProjects = (keywordFilter) => {
   // Remove zombie processes:
   processes = removeZombies(processes);
 
@@ -17,6 +17,12 @@ const getRunningProjects = () => {
   const info = yacTrack.getInfo();
   const projects = _.map(info.yacProjects, (project) => {
     let p = _.find(processes, {name: project.name, path: project.path});
+
+    if (keywordFilter != undefined) {
+      let pkgJson = require(path.resolve(project.path, 'package.json'));
+      if (!_.includes(pkgJson.keywords, keywordFilter)) return undefined;
+    }
+
     if (p != undefined) {
       project.pid = p.pid;
       project.log = p.log;
@@ -24,10 +30,10 @@ const getRunningProjects = () => {
     return project
   });
 
-  return projects;
+  return _.compact(projects);
 };
 
-const launchProject = (p) => {
+const launchProject = (p, callback) => {
   const pkgJson = require(path.resolve(p.path, 'package.json'));
   if (pkgJson.main == undefined) throw`
     Yac project missing "main" in package.json.
@@ -41,12 +47,12 @@ const launchProject = (p) => {
 
   child.stdout.on('data', (data) => {
     proc.log.unshift(data.toString().trim());
-    console.log(proc.log);
+    callback(proc.log);
   });
 
   child.stderr.on('data', (data) => {
     proc.log.unshift(data.toString().trim());
-    console.log(proc.log);
+    callback(proc.log);
   });
 
   processes.push(proc);
