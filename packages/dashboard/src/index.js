@@ -11,21 +11,19 @@ const STOP_MSG = 'Stop';
 
 const ProjectHeader = (p) => {
   let style = `background: #f9f9f9; color:black;
-    height: 42px; border-bottom: 1px solid gainsboro;
-    font-size: 12px; padding-top: 9px;
+    height: 42px; max-height: 42px; border-bottom: 1px solid gainsboro;
+    font-size: 16px; padding-top:5px;
     text-align: center;`;
 
   let colStyle=`
-    background:#f9f9f9; top:-3px;
+    position:relative;
   `;
 
   if (p == undefined) return yo`<div class="row" style="${style}"></div>`;
 
   return yo`
     <div class="row" style="${style}">
-      <div class="col-sm-4" style="${colStyle}">${p.name}</div>
-      <div class="col-sm-4" style="${colStyle}">${p.path}</div>
-      <div class="col-sm-4" style="${colStyle}">${p.pid || "stopped"}</div>
+      <span style="${colStyle}"><b>${p.name}</b> PID: ${p.pid || "stopped"}</span>
     </div>
   `;
 };
@@ -113,17 +111,13 @@ class YacDashboard {
 
     this.container.innerHTML = "";
     this.container.appendChild(yo`
-      <div class="container" style="${Styles.container}" >
-        <nav class="navbar navbar-light" style="height:70px; min-height: 70px !important">
-          <a class="navbar-brand" href="#">
-            <img src="/logo" height="60" alt="">
-          </a>
-        </nav>
-        <div class="row" style="flex-grow: 1; border-top: 1px solid #c1c1c1">
+      <div class="container-fluid" style="${Styles.container}" >
+        <div class="row" style="flex-grow: 1;">
           <div class="col-sm-3" style="background: white;">
             <div class="row" style="
-              height: 42px; margin-bottom: 18px;
+              height: 42px;
               border-bottom: 1px solid gainsboro; background: #f9f9f9">
+              <img src="/logo" height="30" style="margin: 0 auto; top: 6px; position: relative;" alt="">
             </div>
             ${_.map(projects, (p) => yo`
               <div class="row">
@@ -157,9 +151,7 @@ class YacDashboard {
 
 const Styles = {
   body: {
-    background: "#f9f9f9",
-    paddingTop: "16px",
-    paddingBottom: "16px"
+    background: "#f9f9f9"
   },
   container: `
     background: #e0e0e0;

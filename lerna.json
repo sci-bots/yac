@@ -14,7 +14,9 @@
     "packages/dashboard",
     "packages/untrack",
     "packages/process-management",
-    "packages/api"
+    "packages/api",
+    "packages/autostart",
+    "packages/remove-from-autostart"
   ],
   "version": "0.0.17",
   "npmClient": "yarn"

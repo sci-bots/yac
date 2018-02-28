@@ -102,6 +102,16 @@ const main = (cwd=undefined, port=PORT) => {
     }
   });
 
+  //  Auto start plugins with autostart flag in yac info:
+  const _info = yacTrack.getInfo();
+  _.each(_info.yacProjects, (proj) => {
+    if (proj.autostart == true) {
+      start(proj, (log) => {
+        socket.emit('data', info());
+      })
+    }
+  });
+
   server.listen(port, 'localhost', null, () => {
    console.log(`Yac dashboard running on port ${port}`) ;
  });

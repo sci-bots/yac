@@ -9,7 +9,10 @@ module.exports = (cwd=undefined) => {
   if (cwd == undefined) cwd = process.cwd();
 
   const yacInfo = yacTrack.getInfo();
-  const str = _.map(yacInfo.yacProjects, (p) => `${p.name}: ${p.path}` ).join('\n');
+  const str = _.map(yacInfo.yacProjects, (p) => `
+    ${p.name} ${p.autostart ? '(autostart)': '' }
+    ${p.path}
+  ` ).join('\n');
   console.log(`
 Yac Projects:
 ${str}

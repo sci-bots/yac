@@ -18,6 +18,8 @@
     "@yac/remove": "0.0.12",
     "@yac/track": "0.0.12",
     "@yac/undev": "0.0.12",
-    "@yac/untrack": "0.0.12"
+    "@yac/untrack": "0.0.12",
+    "@yac/autostart": "^0.0.17",
+    "@yac/remove-from-autostart": "^0.0.17"
   }
 }
