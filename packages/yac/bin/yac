@@ -9,10 +9,23 @@ const CWD = (argv) => {
   return path.resolve(argv.cwd);
 }
 
+const YACFILE = (argv) => {
+  if (argv.useEnvVariable == true) argv.yacfile = process.env["YAC_FILE"];
+  return argv.yacfile;
+}
+
 const argv = require('yargs')
   .option('cwd', {
     describe: 'change directory of execution',
     type: 'string'
+  })
+  .option('yacfile', {
+    describe: 'path to yacinfo.json file',
+    type: 'string'
+  })
+  .option('use-env-variable', {
+    describe: 'use environment variable (YAC_FILE) for yacfile location',
+    type: 'boolean'
   })
   .command('conda-info', 'show active conda', () => {}, (argv) => {
     spawnSync('conda info', [], {stdio: 'inherit', shell: true});
@@ -42,21 +55,22 @@ const argv = require('yargs')
     yac.undev(CWD(argv), argv.packageLocation);
   })
   .command('track', 'track a yac package', () => {}, (argv) => {
-    yac.track(CWD(argv));
+    if (argv.yacfile != undefined) yac.track.setFileLocation(YACFILE(argv));
+    yac.track.add(CWD(argv));
   })
   .command('untrack', 'untrack a yac package', () => {}, (argv) => {
-    yac.untrack(CWD(argv));
+    yac.untrack(CWD(argv), YACFILE(argv));
   })
   .command('list', 'list yac packages', () => {}, (argv) => {
-    yac.list(CWD(argv));
+    yac.list(CWD(argv), YACFILE(argv));
   })
   .command('dashboard', 'start dashboard for managing yac packages', () => {}, (argv) => {
-    yac.dashboard(CWD(argv));
+    yac.dashboard(CWD(argv), undefined, YACFILE(argv));
   })
   .command('autostart <packageName> [packageLocation]', 'auto start yac project with dashboard', () => {}, (argv) => {
-    yac.autostart(argv.packageName, argv.packageLocation);
+    yac.autostart(argv.packageName, argv.packageLocation, YACFILE(argv));
   })
   .command('autostart-remove <packageName> [packageLocation]', 'remove package from autostart', () => {}, (argv) => {
-    yac.autostartRemove(argv.packageName, argv.packageLocation);
+    yac.autostartRemove(argv.packageName, argv.packageLocation, YACFILE(argv));
   })
 .argv;

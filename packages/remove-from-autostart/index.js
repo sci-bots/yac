@@ -1,7 +1,8 @@
 const yacTrack = require('@yac/track');
 const yacAutostart = require('@yac/autostart');
 
-module.exports = (projName, projPath) => {
+module.exports = (projName, projPath, yacfile) => {
+  yacTrack.setFileLocation(yacfile);
   const info = yacTrack.getInfo();
   const project = yacAutostart.getProject(info, projName, projPath);
   project.autostart = false;

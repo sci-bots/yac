@@ -41,7 +41,10 @@ const stop = async (p) => {
   return 'done';
 }
 
-const main = (cwd=undefined, port=PORT) => {
+const main = (cwd=undefined, port=PORT, yacfile) => {
+  yacTrack.setFileLocation(yacfile);
+  yacManager.setFileLocation(yacfile);
+  
   /* Launch Yac Dashboard */
   env.port = port;
   /* Track the yac package in the cwd */

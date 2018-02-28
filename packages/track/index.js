@@ -4,11 +4,17 @@ const os = require('os');
 
 const _ = require('lodash');
 
-module.exports = (cwd=undefined) => {
+let FILE_LOCATION = path.resolve(__dirname, 'yacinfo.json');
+
+const setFileLocation = (fileLocation) => {
+  if (fileLocation != undefined) fileLocation = path.resolve(fileLocation);
+  FILE_LOCATION = fileLocation || path.resolve(__dirname, 'yacinfo.json');
+}
+
+const add = (cwd=undefined, yacInfoFile=FILE_LOCATION) => {
   /* Track the yac package in the cwd */
   if (cwd == undefined) cwd = process.cwd();
 
-  const yacInfoFile = path.resolve(__dirname, 'yacinfo.json');
   let yacInfo = {};
 
   // Get yac info from yacinfo.json
@@ -47,9 +53,11 @@ module.exports = (cwd=undefined) => {
 
 }
 
-module.exports.getInfo = () => {
-  const yacInfoFile = path.resolve(__dirname, 'yacinfo.json');
+module.exports = setFileLocation;
+module.exports.setFileLocation = setFileLocation;
+module.exports.add = add;
 
+module.exports.getInfo = (yacInfoFile=FILE_LOCATION) => {
   if (!fs.existsSync(yacInfoFile)) {
     return {yacProjects: []};
   } else {
@@ -57,8 +65,7 @@ module.exports.getInfo = () => {
   }
 }
 
-module.exports.writeInfo = (info) => {
-  const yacInfoFile = path.resolve(__dirname, 'yacinfo.json');
+module.exports.writeInfo = (info, yacInfoFile=FILE_LOCATION) => {
   fs.writeFileSync(yacInfoFile, JSON.stringify(info, null, 4));
 }
 

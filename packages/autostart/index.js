@@ -19,7 +19,8 @@ const getProject = (info, projName, projPath) => {
   return project;
 }
 
-module.exports = (projName, projPath) => {
+module.exports = (projName, projPath, yacfile) => {
+  yacTrack.setFileLocation(yacfile);
   const info = yacTrack.getInfo();
   const project = getProject(info, projName, projPath);
   project.autostart = true;

@@ -5,10 +5,11 @@ const _ = require('lodash');
 
 const yackTrack = require('@yac/track');
 
-module.exports = (cwd=undefined, ) => {
+module.exports = (cwd=undefined, yacfile) => {
   /* Un-track the yac package in the cwd */
   if (cwd == undefined) cwd = process.cwd();
 
+  yackTrack.setFileLocation(yacfile);
   const yacInfo = yackTrack.getInfo();
   const pkgJSON = require(path.resolve(cwd, 'package.json'));
   const pkgName = pkgJSON.name;

@@ -9,6 +9,10 @@ const yacExec = require('@yac/exec');
 
 let processes = [];
 
+const setFileLocation = (fileLocation) => {
+  yacTrack.setFileLocation(fileLocation);
+}
+
 const getRunningProjects = (keywordFilter) => {
   // Remove zombie processes:
   processes = removeZombies(processes);
@@ -90,5 +94,9 @@ const removeZombies = (processes) => {
 };
 
 module.exports = {
-  getRunningProjects, removeZombies, launchProject, terminateProject
+  getRunningProjects,
+  removeZombies,
+  launchProject,
+  terminateProject,
+  setFileLocation
 };
