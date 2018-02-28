@@ -1,6 +1,6 @@
 {
   "name": "@yac/list",
-  "version": "0.0.12",
+  "version": "0.0.18",
   "description": "List yac packages being tracked",
   "main": "index.js",
   "author": "Sci-Bots",
