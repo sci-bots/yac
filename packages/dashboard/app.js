@@ -8,7 +8,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sha256 = require('sha256');
 const _ = require('lodash');
-const io = require('socket.io');
+const WebSocket = require('ws');
+
 const options = {stdio: 'inherit', shell: true};
 
 let PORT=8009;
@@ -44,7 +45,7 @@ const stop = async (p) => {
 const main = (cwd=undefined, port=PORT, yacfile) => {
   yacTrack.setFileLocation(yacfile);
   yacManager.setFileLocation(yacfile);
-  
+
   /* Launch Yac Dashboard */
   env.port = port;
   /* Track the yac package in the cwd */
@@ -52,7 +53,15 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
 
   app = express();
   server = http.createServer(app);
-  socket = io(server);
+
+  wss = new WebSocket.Server({ server });
+  wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+  };
 
   const pids = [];
   app.use(bodyParser.json());
@@ -71,7 +80,7 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
     let hash = sha256(JSON.stringify(_info));
     if (hash != prevHash) {
       prevHash = hash;
-      socket.emit('data', _info);
+      wss.broadcast(JSON.stringify({topic: 'data', payload: _info}));
     }
   }, 1500);
 
@@ -96,7 +105,7 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
       if (!proj) throw("Could not find project");
       if (proj.pid) throw("Project already running");
       start(proj, (log) => {
-        socket.emit('data', info());
+        wss.broadcast(JSON.stringify({topic: 'data', payload: info()}));
       });
       res.send(`${proj.pid}`);
     } catch (e) {
@@ -110,7 +119,7 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
   _.each(_info.yacProjects, (proj) => {
     if (proj.autostart == true) {
       start(proj, (log) => {
-        socket.emit('data', info());
+        wss.broadcast(JSON.stringify({topic: 'data', payload: info()}));
       })
     }
   });

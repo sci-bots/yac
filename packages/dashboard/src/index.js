@@ -1,7 +1,7 @@
 require('bootstrap/dist/css/bootstrap.min.css');
 
 const request = require('browser-request');
-const io = require('socket.io-client');
+// const io = require('socket.io-client');
 
 const yo = require('yo-yo');
 const _ = require('lodash');
@@ -75,13 +75,13 @@ class YacDashboard {
   constructor(container) {
     _.extend(document.body.style, Styles.body);
     this.container = container;
-    this.socket = io('http://localhost:8009');
-    this.socket.on('data', this.onEvent.bind(this));
-    this.init();
-  }
+    this.socket = new WebSocket("ws://localhost:8009");
+    this.socket.onmessage = (event) => {
+      const {topic, payload} = JSON.parse(event.data);
+      this.render(payload);
+    }
 
-  onEvent(data) {
-    this.render(data);
+    this.init();
   }
 
   stop(p, e) {
