@@ -1,11 +1,10 @@
 const yacTrack = require('@yac/track');
 const yacAutostart = require('@yac/autostart');
 
-module.exports = (projName, projPath, yacfile) => {
-  yacTrack.setFileLocation(yacfile);
-  const info = yacTrack.getInfo();
+module.exports = async (projName, projPath, yacfile, options) => {
+  yacTrack.setFileLocation(yacfile, options);
+  const info = await yacTrack.getInfo();
   const project = yacAutostart.getProject(info, projName, projPath);
   project.autostart = false;
-  yacTrack.writeInfo(info);
-  console.log("Project removed from autostart");
+  await yacTrack.writeInfo(info);
 }

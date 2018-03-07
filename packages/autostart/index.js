@@ -19,12 +19,12 @@ const getProject = (info, projName, projPath) => {
   return project;
 }
 
-module.exports = (projName, projPath, yacfile) => {
-  yacTrack.setFileLocation(yacfile);
-  const info = yacTrack.getInfo();
+module.exports = async (projName, projPath, yacfile, options) => {
+  yacTrack.setFileLocation(yacfile, options);
+  const info = await yacTrack.getInfo();
   const project = getProject(info, projName, projPath);
   project.autostart = true;
-  yacTrack.writeInfo(info);
+  await yacTrack.writeInfo(info);
 }
 
 module.exports.getProject = getProject

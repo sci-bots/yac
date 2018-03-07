@@ -42,12 +42,14 @@ const stop = async (p) => {
   return 'done';
 }
 
-const main = (cwd=undefined, port=PORT, yacfile) => {
-  yacTrack.setFileLocation(yacfile);
-  yacManager.setFileLocation(yacfile);
+const main = async (cwd=undefined, yacfile, options={port: PORT, url: false}) => {
+  if (options.port == undefined) options.port = PORT;
+  yacTrack.setFileLocation(yacfile, options);
+  yacManager.setFileLocation(yacfile, options);
 
   /* Launch Yac Dashboard */
-  env.port = port;
+  env.port = options.port;
+
   /* Track the yac package in the cwd */
   if (cwd == undefined) cwd = process.cwd();
 
@@ -71,12 +73,12 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
     res.sendFile(env.logo || path.resolve(__dirname, 'public/logo.png'));
   });
 
-  app.get('/yacInfo.json', (req, res) => {
-    res.send(JSON.stringify(info()));
+  app.get('/yacInfo.json', async (req, res) => {
+    res.send(JSON.stringify(await info()));
   });
 
-  setInterval(()=> {
-    let _info = info();
+  setInterval( async ()=> {
+    let _info = await info();
     let hash = sha256(JSON.stringify(_info));
     if (hash != prevHash) {
       prevHash = hash;
@@ -84,10 +86,10 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
     }
   }, 1500);
 
-  app.post('/stop', (req, res) => {
+  app.post('/stop', async (req, res) => {
     try {
       const p = req.body;
-      const proj = _.find(info(), {name: p.name, path: p.path});
+      const proj = _.find(await info(), {name: p.name, path: p.path});
       if (!proj) throw("Could not find project");
       if (!proj.pid) throw("Project is not running");
       stop(proj);
@@ -98,14 +100,15 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
     }
   });
 
-  app.post('/start', (req, res) => {
+  app.post('/start', async (req, res) => {
     try {
       const p = req.body;
-      const proj = _.find(info(), {name: p.name, path: p.path});
+      const proj = _.find(await info(), {name: p.name, path: p.path});
+      console.log("STARTING!", {p, proj});
       if (!proj) throw("Could not find project");
       if (proj.pid) throw("Project already running");
-      start(proj, (log) => {
-        wss.broadcast(JSON.stringify({topic: 'data', payload: info()}));
+      start(proj, async (log) => {
+        wss.broadcast(JSON.stringify({topic: 'data', payload: await info()}));
       });
       res.send(`${proj.pid}`);
     } catch (e) {
@@ -115,7 +118,7 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
   });
 
   //  Auto start plugins with autostart flag in yac info:
-  const _info = yacTrack.getInfo();
+  const _info = await yacTrack.getInfo();
   _.each(_info.yacProjects, (proj) => {
     if (proj.autostart == true) {
       start(proj, (log) => {
@@ -124,8 +127,8 @@ const main = (cwd=undefined, port=PORT, yacfile) => {
     }
   });
 
-  server.listen(port, 'localhost', null, () => {
-   console.log(`Yac dashboard running on port ${port}`) ;
+  server.listen(options.port, 'localhost', null, () => {
+   console.log(`Yac dashboard running on port ${options.port}`) ;
  });
 
 }

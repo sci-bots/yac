@@ -9,16 +9,17 @@ const yacExec = require('@yac/exec');
 
 let processes = [];
 
-const setFileLocation = (fileLocation) => {
-  yacTrack.setFileLocation(fileLocation);
+const setFileLocation = (fileLocation, options) => {
+  yacTrack.setFileLocation(fileLocation, options);
 }
 
-const getRunningProjects = (keywordFilter) => {
+const getRunningProjects = async (keywordFilter) => {
   // Remove zombie processes:
-  processes = removeZombies(processes);
+  processes = await removeZombies(processes);
 
   // Update the process id's attached to each project
-  const info = yacTrack.getInfo();
+  const info = await yacTrack.getInfo();
+
   const projects = _.map(info.yacProjects, (project) => {
     let p = _.find(processes, {name: project.name, path: project.path});
 
@@ -38,57 +39,63 @@ const getRunningProjects = (keywordFilter) => {
 };
 
 const launchProject = (p, callback) => {
-  const pkgJson = require(path.resolve(p.path, 'package.json'));
-  if (pkgJson.main == undefined) throw`
-    Yac project missing "main" in package.json.
-    path: ${p.path}
-    name: ${p.name}
-  `;
+  const LABEL = 'process-management:launchProject';
+  try {
+    const pkgJson = require(path.resolve(p.path, 'package.json'));
+    if (pkgJson.main == undefined) throw`
+      Yac project missing "main" in package.json.
+      path: ${p.path}
+      name: ${p.name}
+    `;
 
-  const child = yacExec(p.path, pkgJson.main, false, false);
-  let proc = _.extend(p, {pid: child.pid});
-  proc.log = [];
+    const child = yacExec(p.path, pkgJson.main, false, false);
+    let proc = _.extend(p, {pid: child.pid});
+    proc.log = [];
 
-  child.stdout.on('data', (data) => {
-    proc.log.unshift(data.toString().trim());
-    callback(proc.log);
-  });
+    child.stdout.on('data', (data) => {
+      proc.log.unshift(data.toString().trim());
+      callback(proc.log);
+    });
 
-  child.stderr.on('data', (data) => {
-    proc.log.unshift(data.toString().trim());
-    callback(proc.log);
-  });
+    child.stderr.on('data', (data) => {
+      proc.log.unshift(data.toString().trim());
+      callback(proc.log);
+    });
 
-  processes.push(proc);
-  return child.pid
+    processes.push(proc);
+    return child.pid;
+  } catch (e) {
+    console.error(LABEL, e);
+    throw e;
+  }
 };
 
-const _removeProcess = (p, info) => {
-  if (info == undefined) info = yacTrack.getInfo();
+const _removeProcess = async (p, info) => {
+  if (info == undefined) info = await yacTrack.getInfo();
   const projects = info.yacProjects;
   const project = _.find(projects, {name: p.name, path: p.path});
   project.prevLog = p.log;
   _.remove(processes, {pid: p.pid});
-  yacTrack.writeInfo(info);
+  await yacTrack.writeInfo(info);
 }
 
 const terminateProject = async (p) => {
-  _removeProcess(p);
+  await _removeProcess(p);
   let err = await new Promise((r,b) => {terminate(p.pid, (e)=>r(e))});
   if (err) throw err;
   return;
 };
 
-const removeZombies = (processes) => {
+const removeZombies = async (processes) => {
   /* Remove projects that are no longer running */
-  const info = yacTrack.getInfo();
+  const info = await yacTrack.getInfo();
 
-  _.each(processes, (p) => {
+  await Promise.all(_.map(processes, async (p) => {
     if (!isRunning(p.pid)) {
       // Store the log of the process, and then remove
-      _removeProcess(p, info);
+      await _removeProcess(p, info);
     }
-  });
+  }));
 
   return processes;
 };
