@@ -3,9 +3,10 @@ const {spawn} = require('child_process');
 const yacTrack = require('@yac/track');
 const yacManager = require('@yac/process-management');
 
-const path = require('path');
-const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
+const path = require('path');
 const sha256 = require('sha256');
 const _ = require('lodash');
 const WebSocket = require('ws');
@@ -64,9 +65,28 @@ const main = async (cwd=undefined, yacfile, options={port: PORT, url: false}) =>
       }
     });
   };
+  const broadcastInfo = async (ignoreHash = false) => {
+    let _info = await info();
+    let hash = sha256(JSON.stringify(_info));
+    if (hash != prevHash || ignoreHash == true) {
+      prevHash = hash;
+      wss.broadcast(JSON.stringify({topic: 'data', payload: _info}));
+    }
+  }
+  wss.on('connection', function connection(ws) {
+    broadcastInfo(true);
+    ws.on('message', function incoming(message) {
+      broadcastInfo(true);
+    });
+  });
+
 
   const pids = [];
   app.use(bodyParser.json());
+  app.use(cors({
+    'origin': '*',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE'
+  }));
   app.use(express.static(path.resolve(__dirname, 'public')))
 
   app.get('/logo', (req, res) => {
@@ -77,14 +97,7 @@ const main = async (cwd=undefined, yacfile, options={port: PORT, url: false}) =>
     res.send(JSON.stringify(await info()));
   });
 
-  setInterval( async ()=> {
-    let _info = await info();
-    let hash = sha256(JSON.stringify(_info));
-    if (hash != prevHash) {
-      prevHash = hash;
-      wss.broadcast(JSON.stringify({topic: 'data', payload: _info}));
-    }
-  }, 1500);
+  setInterval(broadcastInfo, 1500);
 
   app.post('/stop', async (req, res) => {
     try {
