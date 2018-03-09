@@ -53,12 +53,12 @@ const launchProject = (p, callback) => {
     proc.log = [];
 
     child.stdout.on('data', (data) => {
-      proc.log.unshift(data.toString().trim());
+      proc.log.unshift({err: false, msg: data.toString()});
       callback(proc.log);
     });
 
     child.stderr.on('data', (data) => {
-      proc.log.unshift(data.toString().trim());
+      proc.log.unshift({err: true, msg: data.toString()});
       callback(proc.log);
     });
 

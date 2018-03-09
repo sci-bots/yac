@@ -31,12 +31,16 @@ const ProjectHeader = (p) => {
 const ProjectLog = (p) => {
   return yo`
     <div>
-      <div class="row" style="color: #23f100; display: block;padding:10px;">
-        ${_.map(p.log || [], (d) => yo`<div>${d}</div>`)}
+      <div class="row" style="display: block;padding:10px;">
+        ${_.map(p.log || [], (d) => {
+          const red = '#dc3545';
+          const green = '#23f100';
+          return yo`<div style="color:${d.err ? red : green}">${d.msg}</div>`
+        })}
       </div>
       <div>------</div>
       <div class="row" style="display: block;padding:10px;">
-        ${_.map(p.prevLog || [], (d) => yo`<div>${d}</div>`)}
+        ${_.map(p.prevLog || [], (d) => yo`<div>${d.msg}</div>`)}
       </div>
     </div>
   `;
