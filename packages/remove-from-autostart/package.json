@@ -1,13 +1,13 @@
 {
   "name": "@yac/remove-from-autostart",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Remove project from yac dashboard startup processes",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/autostart": "^0.0.19",
-    "@yac/track": "^0.0.19"
+    "@yac/autostart": "^0.0.20",
+    "@yac/track": "^0.0.20"
   }
 }
