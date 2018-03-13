@@ -29,7 +29,8 @@ module.exports = (cwd=undefined) => {
   }
 
   spawnSync(commands.createEnv, [], options);
-  spawnSync(`${activate} conda install pip conda-build`, [], options);
+  spawnSync(`conda install conda-build`, [], options);
+  spawnSync(`${activate} conda install pip`, [], options);
 
   console.log(`
     Install complete!
