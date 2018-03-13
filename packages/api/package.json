@@ -1,6 +1,6 @@
 {
   "name": "@yac/api",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Remote API for Yac",
   "main": "index.js",
   "author": "Sci-Bots",
@@ -13,7 +13,7 @@
     "@yac/dev": "0.0.12",
     "@yac/exec": "0.0.12",
     "@yac/init": "0.0.1",
-    "@yac/install": "^0.0.15",
+    "@yac/install": "^0.0.21",
     "@yac/list": "^0.0.20",
     "@yac/process-management": "^0.0.20",
     "@yac/remove": "0.0.12",
