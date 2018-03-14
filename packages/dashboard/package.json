@@ -6,6 +6,9 @@
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
+  "scripts": {
+    "build": "./node_modules/.bin/webpack"
+  },
   "dependencies": {
     "@yac/exec": "^0.0.12",
     "@yac/process-management": "^0.0.20",
@@ -23,5 +26,8 @@
     "style-loader": "^0.20.2",
     "ws": "^4.1.0",
     "yo-yo": "^1.4.1"
+  },
+  "devDependencies": {
+    "webpack": "3"
   }
 }

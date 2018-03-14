@@ -1,7 +1,8 @@
 {
   "main": "lerna.json",
   "scripts": {
-    "start": "node packages/yac/bin/yac"
+    "start": "node packages/yac/bin/yac",
+    "build": "lerna run build"
   },
   "keywords": [
     "Yac"
