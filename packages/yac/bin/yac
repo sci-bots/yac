@@ -27,6 +27,10 @@ const argv = require('yargs')
     describe: 'use environment variable (YAC_FILE) for yacfile location',
     type: 'boolean'
   })
+  .option('channel', {
+    describe: 'channel name to pass with yac add (for conda packages)',
+    type: 'string'
+  })
   .command('conda-info', 'show active conda', () => {}, (argv) => {
     spawnSync('conda info', [], {stdio: 'inherit', shell: true});
   })
@@ -41,7 +45,7 @@ const argv = require('yargs')
   })
   .command('add <packageName> [type]', 'add package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';
-    yac.add(CWD(argv), argv.packageName, argv.type);
+    yac.add(CWD(argv), argv.packageName, argv.type, argv.channel);
   })
   .command('remove <packageName> [type]', 'remove package through conda or pip', () => {}, (argv) => {
     if (argv.type == undefined) argv.type = 'conda';

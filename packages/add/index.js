@@ -4,7 +4,7 @@ const {spawnSync} = require('child_process');
 
 let options = {stdio: 'inherit', shell: true};
 
-module.exports = (cwd=undefined, packageName, type) => {
+module.exports = (cwd=undefined, packageName, type, channel) => {
   if (cwd == undefined) cwd = process.cwd();
   options.cwd = cwd;
 
@@ -12,7 +12,7 @@ module.exports = (cwd=undefined, packageName, type) => {
 
   let cmd;
   if (type == 'conda') {
-    cmd = `conda install ${packageName}`;
+    cmd = `conda install ${channel ? '-c ${channel}' : ''} ${packageName}`;
   } else if (type == 'pip') {
     cmd = `pip install ${packageName}`
   } else {
