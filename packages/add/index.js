@@ -12,12 +12,13 @@ module.exports = (cwd=undefined, packageName, type, channel) => {
 
   let cmd;
   if (type == 'conda') {
-    cmd = `conda install ${channel ? '-c ${channel}' : ''} ${packageName}`;
+    cmd = `conda install ${channel ? `--channel=${channel}` : ''} ${packageName}`;
   } else if (type == 'pip') {
     cmd = `pip install ${packageName}`
   } else {
     throw `Invalid type ${type}. yac currently support conda and pip.`
   }
+  console.log("Running: ", cmd);
 
   let activate;
   if (os.platform() == 'win32') {
