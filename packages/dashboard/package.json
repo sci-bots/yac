@@ -1,6 +1,6 @@
 {
   "name": "@yac/dashboard",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Dashboard for managing yac projects",
   "main": "app.js",
   "author": "Sci-Bots",
@@ -10,8 +10,8 @@
     "build": "./node_modules/.bin/webpack"
   },
   "dependencies": {
-    "@yac/exec": "^0.0.22",
-    "@yac/process-management": "^0.0.22",
+    "@yac/exec": "^0.0.23",
+    "@yac/process-management": "^0.0.23",
     "@yac/track": "^0.0.22",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
