@@ -1,6 +1,6 @@
 {
   "name": "@yac/install",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Install yac project dependencies",
   "main": "index.js",
   "author": "Sci-Bots",

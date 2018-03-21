@@ -1,13 +1,13 @@
 {
   "name": "@yac/autostart",
-  "version": "0.0.20",
+  "version": "0.0.22",
   "description": "Add project to launch alongside yac dashboard",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/track": "^0.0.20",
+    "@yac/track": "^0.0.22",
     "lodash": "^4.17.5"
   }
 }

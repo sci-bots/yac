@@ -19,10 +19,14 @@ module.exports = (cwd=undefined, cmd, sync=true, inherit=true) => {
   console.log("Executing: ", cmd);
 
   let child;
-  if (sync == true) child = spawnSync(cmd, [], options);
-  if (sync != true) {
-    if (inherit == false) options.stdio = 'pipe';
-    child = spawn(cmd, [], options);
+  try {
+    if (sync == true) child = spawnSync(cmd, [], options);
+    if (sync != true) {
+      if (inherit == false) options.stdio = 'pipe';
+      child = spawn(cmd, [], options);
+    }
+  } catch (e) {
+    console.error(e);
   }
 
   return child;

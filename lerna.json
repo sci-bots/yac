@@ -18,6 +18,6 @@
     "packages/autostart",
     "packages/remove-from-autostart"
   ],
-  "version": "0.0.21",
+  "version": "0.0.22",
   "npmClient": "yarn"
 }
