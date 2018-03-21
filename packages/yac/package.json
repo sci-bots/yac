@@ -1,13 +1,13 @@
 {
   "name": "@yac/yac",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Multi-Language Package Management",
   "main": "index.js",
   "author": "Sci-Bots",
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "@yac/api": "^0.0.23",
+    "@yac/api": "^0.0.24",
     "yargs": "^11.0.0"
   },
   "publishConfig": {
